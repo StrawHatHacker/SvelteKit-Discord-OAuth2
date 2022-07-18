@@ -29,3 +29,5 @@ In production change the `localhost:3000` with your domain on [discord.com/devel
 6. And now, navigating to `localhost:3000/dashboard` should display the user's Discord ID.
 
 `FullUser` is the aggregated result of the authenticated user's access token data(`GrantData`) and user information data(`UserData`).
+
+### Contributions welcome
