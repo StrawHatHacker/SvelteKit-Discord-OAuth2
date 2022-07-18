@@ -1,12 +1,9 @@
 import { fetchSession } from '$lib/utils/sessionHandler';
 import type { Handle, GetSession } from '@sveltejs/kit';
-import mongoose from 'mongoose';
 import cookie from 'cookie';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-await mongoose.connect(process.env.MONGO_URI, {});
 
 export const handle: Handle | unknown = async ({ event, resolve }) => {
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
@@ -25,9 +22,7 @@ export const handle: Handle | unknown = async ({ event, resolve }) => {
 };
 
 export const getSession: GetSession | unknown = (request) => {
-	if (request?.locals?.user) {
-		return request.locals.user;
-	}
+	if (request?.locals?.user) return request.locals.user;
 
 	return {};
 };

@@ -1,20 +1,31 @@
-import type { TSessionID, TDatabaseID } from 'src/interfaces';
+import type { FullUser, ITokenGrantData, IUserData, TSessionID } from 'src/interfaces';
 import crypto from 'crypto';
 
-const sessionUsers = new Map<TSessionID, TDatabaseID>();
+const sessionUsers = new Map<TSessionID, FullUser>();
 
-export function createSession(userID: TDatabaseID): TSessionID {
-	const randomID = crypto.randomBytes(32).toString('hex');
+export function setSession(userData: IUserData, tokenGrantData: ITokenGrantData) {
 
-	sessionUsers.set(randomID, userID.toString());
+    // Creating a new session ID that will be used as a cookie to authenticate the user in 
+    const newSessionID: TSessionID = crypto.randomBytes(32).toString('hex');
+    const fullUser: FullUser = { ...userData, ...tokenGrantData };
 
-	return randomID;
+    sessionUsers.set(newSessionID, fullUser);
+
+    setTimeout(() => {
+        deleteSession(newSessionID)
+    }, 1000 * 60 * 10) //  10 minutes
+
+    return newSessionID as TSessionID;
 }
 
 export function fetchSession(sessionId: TSessionID) {
-	return sessionUsers.get(sessionId) || null;
+    setTimeout(() => {
+        deleteSession(sessionId)
+    }, 1000 * 60 * 10) //  10 minutes
+
+    return sessionUsers.get(sessionId) || null;
 }
 
 export function deleteSession(sessionId: TSessionID) {
-	sessionUsers.delete(sessionId);
+    sessionUsers.delete(sessionId);
 }
