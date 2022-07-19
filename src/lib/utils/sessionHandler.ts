@@ -19,10 +19,6 @@ export function setSession(userData: IUserData, tokenGrantData: ITokenGrantData)
 }
 
 export function fetchSession(sessionId: TSessionID) {
-    setTimeout(() => {
-        deleteSession(sessionId)
-    }, 1000 * 60 * 10) //  10 minutes
-
     return sessionUsers.get(sessionId) || null;
 }
 
