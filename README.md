@@ -23,9 +23,9 @@ In production change the `localhost:3000` with your domain on [discord.com/devel
 #### The authentication process
 1. User clicks the `Login with Discord` button and they get redirected to the generated URL.
 2. Assuming they authorized our app in the Discord website, they will be redirected to out Redirect URI, which is our endpoint(`http://localhost:3000/api/v1/user/auth` in this case). Discord will append a `code` query parameter that we can use to get user data from Discord's API.
-3. In our endpoint we get the user data and the guilds they are in, then we create a new session in memory(with `sessionHandler`) and saving our `FullUser` in it. Creating a session will return us a random ID that will send back to the user as a cookie, just as we redirect them to `/dashboard`. That is so...
+3. In our endpoint we get the user data and the guilds they are in, then we create a new session in memory(with `sessionHandler`) and saving the user data in it. Creating a session will return us a random ID that will send back to the user as a cookie, just as we redirect them to `/dashboard`. That is so...
 4. When a user navigates to a protected route(eg. the `dashboard` folder), they send the cookie(automatically), then the cookie gets parsed in `/src/hooks.ts`, and then authenticated in the `/src/routes/dashboard/__layout.svelte`.
-5. In the layout's script tag, we add the `FullUser` to a store so they can be easily accessed by other components.
+5. In the layout's script tag, we add the user to a store so they can be easily accessed by other components.
 6. And now, navigating to `localhost:3000/dashboard` should display the user's Discord ID.
 
 `FullUser` is the aggregated result of the authenticated user's access token data(`GrantData`) and user information data(`UserData`).
