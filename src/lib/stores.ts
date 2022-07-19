@@ -1,12 +1,12 @@
 import { writable } from 'svelte/store';
-import type { FullUser } from '../interfaces';
+import type { IUserData } from '../interfaces';
 
 const fUser = function () {
-    const { subscribe, set, update } = writable<FullUser>();
+    const { subscribe, set, update } = writable<IUserData>();
 
     return {
         subscribe,
-        setUser: (u: FullUser) => set(u)
+        setUser: (u: IUserData) => set(u)
     }
 }
 
