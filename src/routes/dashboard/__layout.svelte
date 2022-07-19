@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
 	import type { IUserData } from 'src/interfaces';
-	import { UserStore } from '$lib/stores';
 
 	export async function load({ session, fetch }) {
 		if (!session?.id)
@@ -24,10 +23,10 @@
 			};
 
 		const User: IUserData = await res.json();
-		UserStore.setUser(User);
 
 		return {
-			props: {}
+			props: {},
+			stuff: User
 		};
 	}
 </script>
