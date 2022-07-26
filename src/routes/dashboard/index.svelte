@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type { IUserData } from 'src/interfaces';
+	import type { APIUser } from 'discord-api-types/v10';
 
 	export async function load({ stuff }) {
 		return {
@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	export let User: IUserData;
+	export let User: APIUser;
 
 	async function logout() {
 		await fetch('/api/v1/user/logout', {

@@ -1,9 +1,9 @@
-import type { FullUser, ITokenGrantData, IUserData, TSessionID } from 'src/interfaces';
-import crypto from 'crypto';
+import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
+import type { FullUser, TSessionID } from 'src/interfaces';
 
 const sessionUsers = new Map<TSessionID, FullUser>();
 
-export function setSession(userData: IUserData, tokenGrantData: ITokenGrantData) {
+export function setSession(userData: APIUser, tokenGrantData: RESTPostOAuth2AccessTokenResult) {
 
     // Creating a new session ID that will be used as a cookie to authenticate the user in 
     const newSessionID: TSessionID = crypto.randomBytes(32).toString('hex');

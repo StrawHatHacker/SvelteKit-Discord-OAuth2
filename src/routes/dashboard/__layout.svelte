@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type { IUserData } from 'src/interfaces';
+	import type { APIUser } from 'discord-api-types/v10';
 
 	export async function load({ session, fetch }) {
 		if (!session?.id)
@@ -22,7 +22,7 @@
 				redirect: '/'
 			};
 
-		const User: IUserData = await res.json();
+		const User: APIUser = await res.json();
 
 		return {
 			props: {},

@@ -1,11 +1,11 @@
 import { fetchSession } from '$lib/utils/sessionHandler';
-import type { IUserData } from 'src/interfaces';
+import type { APIUser } from 'discord-api-types/v10';
 
 interface IBody {
     sessionId: string;
 }
 
-export async function post({ request }) {
+export async function POST({ request }) {
 
     const body: IBody = await request.json();
     if (!body.sessionId) return { status: 400, body: { error: 'Property "sessionId" is required.' } };
@@ -21,6 +21,6 @@ export async function post({ request }) {
 
     return {
         status: 200,
-        body: session as IUserData
+        body: session as APIUser
     };
 }
