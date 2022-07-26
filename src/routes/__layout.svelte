@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Skeleton 🦴💀🦴</title>
+	<title>SvelteKit Discord OAuth2 Example</title>
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 	<meta name="copyright" content="" />
