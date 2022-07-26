@@ -1,4 +1,3 @@
-import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,17 +7,7 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter({ out: 'build' }),
-		vite: {
-			css: {
-				preprocessorOptions: {
-					scss: {}
-				}
-			},
-			build: {
-				target: 'esnext'
-			}
-		}
+		// adapter: adapter({ out: 'build' }),
 	}
 };
 
