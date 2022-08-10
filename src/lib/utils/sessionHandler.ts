@@ -1,5 +1,6 @@
 import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 import type { FullUser, TSessionID } from 'src/interfaces';
+import crypto from 'node:crypto';
 
 const sessionUsers = new Map<TSessionID, FullUser>();
 
