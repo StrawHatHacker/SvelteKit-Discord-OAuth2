@@ -1,15 +1,15 @@
 import { deleteSession } from '$lib/utils/sessionHandler';
+import type { RequestHandler } from '@sveltejs/kit';
 import cookie from 'cookie';
 
-export async function POST({ request }) {
+export const POST: RequestHandler = async ( { request} ) => {
     const cookies = cookie.parse(request.headers.get('cookie') || '');
 
     if (cookies['session_id']) deleteSession(cookies['session_id']);
 
-    return {
-        status: 200,
+    return(new Response('', {
         headers: {
-            'Set-Cookie': cookie.serialize('session_id', null, {
+            'Set-Cookie': cookie.serialize('session_id', '', {
                 path: '/',
                 httpOnly: true,
                 sameSite: false,
@@ -17,5 +17,5 @@ export async function POST({ request }) {
                 maxAge: 0
             })
         }
-    };
+    }));
 }

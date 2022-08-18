@@ -1,13 +1,3 @@
-<script context="module" lang="ts">
-	import type { APIUser } from 'discord-api-types/v10';
-
-	export async function load({ }) {
-		return {
-			props: { }
-		};
-	}
-</script>
-
 <script lang="ts">
 	import { UserStore } from '$lib/stores';
 
