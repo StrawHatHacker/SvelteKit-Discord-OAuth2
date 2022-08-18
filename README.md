@@ -11,10 +11,10 @@ This is why I am here. Let's take this step by step :)
 3. Under the URL generator settings tab, click the `identify` scope and the `guilds` scope.
 4. Add the generated URL in the `Login with Discord` button's click event.
 5. Get the app's `client ID` and `client secret` in the OAuth2 settings tab and...
-6. Create a `.env` file in the root of the directory and add the following lines, adding the values from step 2 and step 5 between the `""`.
+6. Create a `.env` file (or copy `.env.example` to `.env`) in the root of the directory and add the following lines, adding the values from step 2 and step 5 between the `""`.
 ```
-DISCORD_REDIRECT_URI=""
-DISCORD_OAUTH_CLIENT_ID=""
+PUBLIC_DISCORD_REDIRECT_URI=""
+PUBLIC_DISCORD_OAUTH_CLIENT_ID=""
 DISCORD_OAUTH_CLIENT_SECRET=""
 ```
 
