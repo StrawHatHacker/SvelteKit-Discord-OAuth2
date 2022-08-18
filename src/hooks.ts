@@ -12,17 +12,17 @@ export const handle: Handle | unknown = async ({ event, resolve }) => {
 		const session = fetchSession(cookies['session_id']);
 
 		if (session) {
-			event.locals.user = { id: cookies['session_id'] };
+			event.locals.session = { id: cookies['session_id'] };
 			return await resolve(event);
 		}
 	}
 
-	event.locals.user = null;
+	event.locals.session = null;
 	return await resolve(event);
 };
 
 export const getSession: GetSession | unknown = (request) => {
-	if (request?.locals?.user) return request.locals.user;
+	if (request?.locals?.session) return request.locals.session;
 
 	return {};
 };

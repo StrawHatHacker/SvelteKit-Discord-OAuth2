@@ -3,17 +3,20 @@ import type { IPartialGuild, TSessionID } from 'src/interfaces';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
+import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
+import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 export async function GET({ url }) {
     const code = url.searchParams.get('code');
     if (!code) return { status: 400, body: { error: 'No code provided' } };
 
     const FormData = new URLSearchParams({
-        client_id: process.env.DISCORD_OAUTH_CLIENT_ID,
-        client_secret: process.env.DISCORD_OAUTH_CLIENT_SECRET,
+        client_id: PUBLIC_DISCORD_OAUTH_CLIENT_ID,
+        client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: process.env.DISCORD_REDIRECT_URI,
+        redirect_uri: env.PUBLIC_DISCORD_REDIRECT_URI!,
     });
 
     try {

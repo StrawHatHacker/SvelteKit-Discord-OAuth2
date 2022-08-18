@@ -1,15 +1,15 @@
 <script context="module" lang="ts">
 	import type { APIUser } from 'discord-api-types/v10';
 
-	export async function load({ stuff }) {
+	export async function load({ }) {
 		return {
-			props: { User: stuff }
+			props: { }
 		};
 	}
 </script>
 
 <script lang="ts">
-	export let User: APIUser;
+	import { UserStore } from '$lib/stores';
 
 	async function logout() {
 		await fetch('/api/v1/user/logout', {
@@ -21,6 +21,6 @@
 	}
 </script>
 
-<p>User's Discord ID: {User.id}</p>
+<p>User's Discord ID: {$UserStore.id}</p>
 
 <button on:click={logout}>Logout</button>
