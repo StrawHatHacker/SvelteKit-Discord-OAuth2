@@ -1,11 +1,8 @@
 import { fetchSession } from '$lib/utils/sessionHandler';
-import type { Handle, GetSession } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit';
 import cookie from 'cookie';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-export const handle: Handle | unknown = async ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 
 	if (cookies['session_id']) {
@@ -19,10 +16,4 @@ export const handle: Handle | unknown = async ({ event, resolve }) => {
 
 	event.locals.session = null;
 	return await resolve(event);
-};
-
-export const getSession: GetSession | unknown = (request) => {
-	if (request?.locals?.session) return request.locals.session;
-
-	return {};
 };

@@ -1,8 +1,9 @@
 import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 import type { FullUser, TSessionID } from 'src/interfaces';
-import crypto from 'node:crypto';
+import crypto from 'crypto';
 
 const sessionUsers = new Map<TSessionID, FullUser>();
+const sessionUserTimeouts = new Map<TSessionID, NodeJS.Timeout>();
 
 export function setSession(userData: APIUser, tokenGrantData: RESTPostOAuth2AccessTokenResult) {
 
@@ -19,10 +20,41 @@ export function setSession(userData: APIUser, tokenGrantData: RESTPostOAuth2Acce
     return newSessionID as TSessionID;
 }
 
+export function fetchClientSession(sessionId: TSessionID) {
+    refreshTimeout(sessionId);
+
+    const user = sessionUsers.get(sessionId);
+    if (!user) return null;
+
+    const {...partialUser} :APIUser = user;
+    return partialUser;
+}
+
 export function fetchSession(sessionId: TSessionID) {
-    return sessionUsers.get(sessionId) || null;
+    refreshTimeout(sessionId);
+    return sessionUsers.get(sessionId);
+}
+
+function refreshTimeout(sessionId: string) {
+    if (sessionUserTimeouts.has(sessionId)) {
+        sessionUserTimeouts.get(sessionId)?.refresh();
+    }
+    else {
+        const timeout = setTimeout(() => {
+            deleteSession(sessionId);
+        }, 1000 * 60 * 10); //  10 minutes
+        sessionUserTimeouts.set(sessionId, timeout);
+    }
 }
 
 export function deleteSession(sessionId: TSessionID) {
     sessionUsers.delete(sessionId);
+}
+
+export function updateSession(sessionId: TSessionID, userData: APIUser, tokenGrantData: RESTPostOAuth2AccessTokenResult) {
+    refreshTimeout(sessionId);
+    const fullUser: FullUser = { ...userData, ...tokenGrantData };
+    sessionUsers.set(sessionId, fullUser);
+
+    return sessionId as TSessionID;
 }
