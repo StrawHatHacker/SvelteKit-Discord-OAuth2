@@ -59,7 +59,6 @@ export const POST: RequestHandler = async ( { request} ) => {
         }));
     }
     catch (error) {
-        log.error(error);
         return new Response(undefined, { status: 302 })
     }
 }
