@@ -5,8 +5,7 @@ import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
-import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
-import { env } from '$env/dynamic/public';
+import { PUBLIC_DISCORD_OAUTH_CLIENT_ID, PUBLIC_DISCORD_REDIRECT_URI } from '$env/static/public';
 
 export async function GET({ url, setHeaders }) {
     const code = url.searchParams.get('code');
@@ -19,7 +18,7 @@ export async function GET({ url, setHeaders }) {
         client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: env.PUBLIC_DISCORD_REDIRECT_URI!,
+        redirect_uri: PUBLIC_DISCORD_REDIRECT_URI,
     });
 
     try {
@@ -38,10 +37,10 @@ export async function GET({ url, setHeaders }) {
                 Authorization: `Bearer ${AccessData.access_token}`,
             }
         });
+        console.log(2);
 
         const UserData: APIUser = UserRes.data;
         const Grantdata: RESTPostOAuth2AccessTokenResult = AuthRes.data;
-
 
         // Get the guilds the user is in
         const UserGuildRes = await axios.get(`https://discord.com/api/v10/users/@me/guilds`, {
@@ -66,9 +65,10 @@ export async function GET({ url, setHeaders }) {
                 sameSite: false,
                 secure: true,
                 maxAge: Grantdata.expires_in
-            })});
-        setHeaders({'location': '/dashboard'});
-        return new Response('', {status: 302 });
+            })
+        });
+        setHeaders({ 'location': '/dashboard' });
+        return new Response('', { status: 302 });
 
     } catch (error) {
         console.log(error);
