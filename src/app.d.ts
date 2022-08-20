@@ -8,9 +8,7 @@ declare namespace App {
 			id: string
 		}
 	}
-	interface PrivateEnv {
-		DISCORD_OAUTH_CLIENT_SECRET: string
-	}
+	interface PrivateEnv {	}
 	interface PublicEnv {
 		PUBLIC_DISCORD_REDIRECT_URI: string
 	}

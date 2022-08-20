@@ -16,7 +16,7 @@ export const POST: RequestHandler = async ({ request }) => {
         status: 400
     });
 
-    const {...apiUser}:APIUser = session;
+    const { access_token, token_type, refresh_token, expires_in, scope, ...apiUser} = session;
     
     return json(apiUser);
 }
