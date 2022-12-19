@@ -3,8 +3,6 @@ import type { APIUser, RESTPostOAuth2AccessTokenResult, Snowflake } from 'discor
 export type Only<T, U> = { [P in keyof T]: T[P] } & { [P in Exclude<keyof U, keyof T>]?: never };
 export type Either<T, U> = Only<T, U> | Only<U, T>;
 
-export type TSessionID = string;
-
 export interface Iresponse<T> {
 	status: 200 | 400 | 500 | number;
 	body: Either<T, { error: string }>;
@@ -12,7 +10,7 @@ export interface Iresponse<T> {
 
 export type FullUser = APIUser & RESTPostOAuth2AccessTokenResult;
 
-export interface IPartialGuild {
+export interface TPartialGuild {
 	id: Snowflake;
 	name: string;
 	icon: string;

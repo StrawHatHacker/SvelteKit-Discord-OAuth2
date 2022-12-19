@@ -1,12 +1,12 @@
-import { deleteSession } from '$lib/utils/sessionHandler';
+import { deleteSession } from '$lib/server/sessionHandler';
 import cookie from 'cookie';
 
 export async function POST({ request }) {
+    
     const cookies = cookie.parse(request.headers.get('cookie') || '');
-
     if (cookies['session_id']) deleteSession(cookies['session_id']);
 
-    return {
+    return new Response('', {
         status: 200,
         headers: {
             'Set-Cookie': cookie.serialize('session_id', null, {
@@ -17,5 +17,5 @@ export async function POST({ request }) {
                 maxAge: 0
             })
         }
-    };
+    });
 }
